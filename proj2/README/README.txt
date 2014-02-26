@@ -1,0 +1,3 @@
+There are no known bugs in my program, but there are a few things that seem to me like they could be better. In general, all of my thresholds have to be fairly low to get good accuracy. Maybe this indicates that my interest points aren't as good as they could be. I feel like I conceptually understand everything that I did, and I'm not sure what I could do to improve my interest points. I didn't have time to finish the extra-credit, but I have a half-finished version of MSER. I'm not turning it in because it isn't done,  but I'm hoping to finish it on my own and look to see if it improves my interest points. 
+
+The spacing on my web page keeps getting messed up, so I'm sorry about that. It might be annoying to read... 

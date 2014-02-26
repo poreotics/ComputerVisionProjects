@@ -1,0 +1,770 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>CS 143 Project</TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.5  (Linux)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20131030;21354800">
+	<SCRIPT SRC="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></SCRIPT>
+	<SCRIPT SRC="highlighting/highlight.pack.js"></SCRIPT>
+	<SCRIPT>
+    hljs.initHighlightingOnLoad();
+</SCRIPT>
+	<STYLE TYPE="text/css">
+	<!--
+		TD P { color: #444444; font-family: "Crimson Text", serif; font-size: 15pt }
+		H1 { margin-top: 0.26in; margin-bottom: 0in; text-transform: lowercase; font-family: "Nunito", sans-serif; font-size: 21pt; font-weight: normal }
+		P { color: #444444; font-family: "Crimson Text", serif; font-size: 15pt }
+		H2 { margin-top: 0.16in; margin-bottom: 0.36in; color: #333333; font-family: "Nunito", sans-serif; font-size: 24pt; font-weight: normal }
+		H3 { margin-top: 0.1in; margin-bottom: 0.1in; color: #333333; font-family: "Nunito", sans-serif; font-size: 19pt; font-weight: normal }
+		TH P { color: #444444; font-family: "Crimson Text", serif; font-size: 15pt }
+		A:link { color: #de3737 }
+		A:visited { color: #de3737 }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" LINK="#de3737" VLINK="#de3737" BGCOLOR="#fcfcfc" DIR="LTR">
+<DIV ID="header" DIR="LTR" STYLE="background: #333333">
+	<P><BR><BR>
+	</P>
+	<DIV ID="headersub" DIR="LTR">
+		<H1 STYLE="margin-top: 0in; margin-bottom: 0.2in; border: none; padding: 0in">
+		<FONT COLOR="#cccccc">Sarah Parker <FONT COLOR="#de3737">(smparker)</FONT></FONT></H1>
+	</DIV>
+</DIV>
+<H2 STYLE="margin-top: 0in; margin-bottom: 0in">CS 143 / Project 3 /
+Scene Recognition with Bag of Words</H2>
+<P STYLE="margin-bottom: 0in">This project served as an introduction
+to image recognition. The goal was to explore scene recognition using
+various methods, and to gain a better understanding of these methods
+through the process of comparing their respective results. The
+methods used were: 
+</P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0in">Tiny image features grouped with
+	k-nearest neighbor classifier</P>
+	<LI><P STYLE="margin-bottom: 0in">Bag of words with K-nearest
+	neighbor classifier</P>
+	<LI><P STYLE="margin-bottom: 0in">Bag of words with Linear SVM</P>
+</OL>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">I also added some extensions, as you
+will see below. 
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<H3 STYLE="margin-top: 0in; margin-bottom: 0in"><A NAME="__DdeLink__0_1249391971"></A>
+<B>Tiny Images and K-Nearest Neighbor</B></H3>
+<P STYLE="margin-bottom: 0in">To create image features, I simply
+resized all of the images to a 16x16 resolution. I then ran these
+features on a 7-Nearest Neighbor classifier which weights votes
+according to their distance to each feature in the training set. This
+achieved 21% accuracy. 
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<H3 STYLE="margin-top: 0in; margin-bottom: 0in"><A NAME="__DdeLink__2_1249391971"></A>
+<B>Bag of Words and K-Nearest Neighbor</B></H3>
+<P STYLE="margin-bottom: 0in">Next, I created a vocabulary of visual
+words by densely sampling SIFT features from each training image. The
+SIFT features were clustered using K-means and the cluster centers
+were stored as words. Next, I sample SIFT features from the training
+and testing sets and put the features in histogram bins according
+which word they are closest to in feature space. The histograms are
+used as features for each image and sent to the nearest neighbor
+classifier used above. This achieved ~53% accuracy. 
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<H3 STYLE="margin-top: 0in; margin-bottom: 0in"><A NAME="__DdeLink__2_1306531276"></A>
+<B>Bag of Words and Linear SVM</B></H3>
+<P STYLE="margin-bottom: 0in">I used the same bag of words method
+described above and then trained a linear SVM using the image
+features from the training set. The following results are based on
+this recognition method. 
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<H2 STYLE="margin-top: 0in; margin-bottom: 0in">Results</H2>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT SIZE=3>Depending on the number of
+words in the vocabulary, the percent accuracy for the bag of words
+and SVM implementation was around 70%. By adding spatial information
+using spatial pyramid matching, I was able to achieve 78% accuracy. </FONT>
+</P>
+<P STYLE="margin-bottom: 0in"><IMG SRC="../code/1000bag0001_files/confusion_matrix.png" NAME="graphics1" ALIGN=LEFT WIDTH=560 HEIGHT=420 BORDER=0><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT SIZE=3>Bag of Words Confusion
+Matrix for a vocabulary of 1500 words. </FONT>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT SIZE=3>Accuracy (mean of diagonal
+of confusion matrix) is 0.721 </FONT>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<H3 STYLE="margin-top: 0in; margin-bottom: 0in"><B>Spatial Pyramid
+Matching</B></H3>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT SIZE=3><B>In order to look at how
+spatial information affects scene recognition, I implemented the
+spatial pyramid match kernel from <A HREF="http://www.cs.unc.edu/~lazebnik/publications/cvpr06b.pdf">Lazebnik
+et al 2006</A>. This implementation involved densely sampling SIFT
+features from each image and then splitting it up into grids of
+progressively finer resolution. Histograms were created for each SIFT
+cluster center in each grid cell at each level of resolution.
+Histograms were weighted according to the corresponding level of
+resolution and concatenated to create features to feed into the SVM.
+The bag of words implementation is actually analogous to this method
+using only one level of resolution. I used 3 levels of resolution and
+didn't get a chance to experiment with other levels. This would be
+interesting to look into. </B></FONT>
+</P>
+<P STYLE="margin-bottom: 0in"><IMG SRC="../code/1500spac0001_files/confusion_matrix.png" NAME="graphics122" ALIGN=LEFT WIDTH=560 HEIGHT=420 BORDER=0><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT SIZE=3>Spatial Pyramid matching
+with a vocabulary of 1500 words.</FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT SIZE=3>Accuracy (mean of diagonal
+of confusion matrix) is .775</FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0in">The following chart is
+actually from running spatial pyramid matching with 1000 words,
+though it is just 1% less accurate (77.1%.) Something happened to the
+file containing this chart for my 1500 words run but the difference
+between the two is somewhat negligible. 
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<TABLE CELLPADDING=4 CELLSPACING=1>
+	<TR>
+		<TH STYLE="border: none; padding: 0in">
+			<P>Category name</P>
+		</TH>
+		<TH STYLE="border: none; padding: 0in">
+			<P>Accuracy</P>
+		</TH>
+		<TH COLSPAN=2 STYLE="border: none; padding: 0in">
+			<P>Sample training images</P>
+		</TH>
+		<TH COLSPAN=2 STYLE="border: none; padding: 0in">
+			<P>Sample true positives</P>
+		</TH>
+		<TH COLSPAN=2 STYLE="border: none; padding: 0in">
+			<P>False positives with true label</P>
+		</TH>
+		<TH COLSPAN=2 STYLE="border: none; padding: 0in">
+			<P>False negatives with wrong predicted label</P>
+		</TH>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>Kitchen</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.650</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Kitchen_image_0046.jpg" NAME="graphics124" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Kitchen_image_0015.jpg" NAME="graphics125" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Kitchen_image_0118.jpg" NAME="graphics126" ALIGN=BOTTOM WIDTH=57 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Kitchen_image_0147.jpg" NAME="graphics127" ALIGN=BOTTOM WIDTH=79 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/LivingRoom_image_0046.jpg" NAME="graphics128" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>LivingRoom</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Industrial_image_0056.jpg" NAME="graphics129" ALIGN=BOTTOM WIDTH=115 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Industrial</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Kitchen_image_0043.jpg" NAME="graphics130" ALIGN=BOTTOM WIDTH=57 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Bedroom</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Kitchen_image_0119.jpg" NAME="graphics131" ALIGN=BOTTOM WIDTH=57 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>InsideCity</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>Store</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.640</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Store_image_0094.jpg" NAME="graphics132" ALIGN=BOTTOM WIDTH=113 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Store_image_0066.jpg" NAME="graphics133" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Store_image_0030.jpg" NAME="graphics134" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Store_image_0096.jpg" NAME="graphics135" ALIGN=BOTTOM WIDTH=57 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Street_image_0041.jpg" NAME="graphics136" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Street</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/LivingRoom_image_0010.jpg" NAME="graphics137" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>LivingRoom</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Store_image_0032.jpg" NAME="graphics138" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Bedroom</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Store_image_0117.jpg" NAME="graphics139" ALIGN=BOTTOM WIDTH=71 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Kitchen</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>Bedroom</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.620</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Bedroom_image_0159.jpg" NAME="graphics140" ALIGN=BOTTOM WIDTH=93 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Bedroom_image_0094.jpg" NAME="graphics141" ALIGN=BOTTOM WIDTH=116 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Bedroom_image_0013.jpg" NAME="graphics142" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Bedroom_image_0141.jpg" NAME="graphics143" ALIGN=BOTTOM WIDTH=101 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/LivingRoom_image_0136.jpg" NAME="graphics144" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>LivingRoom</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/LivingRoom_image_0117.jpg" NAME="graphics145" ALIGN=BOTTOM WIDTH=114 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>LivingRoom</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Bedroom_image_0150.jpg" NAME="graphics146" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>LivingRoom</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Bedroom_image_0175.jpg" NAME="graphics147" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>LivingRoom</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>LivingRoom</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.620</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/LivingRoom_image_0253.jpg" NAME="graphics148" ALIGN=BOTTOM WIDTH=74 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/LivingRoom_image_0118.jpg" NAME="graphics149" ALIGN=BOTTOM WIDTH=97 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/LivingRoom_image_0040.jpg" NAME="graphics150" ALIGN=BOTTOM WIDTH=114 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/LivingRoom_image_0077.jpg" NAME="graphics151" ALIGN=BOTTOM WIDTH=113 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Industrial_image_0085.jpg" NAME="graphics152" ALIGN=BOTTOM WIDTH=112 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Industrial</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Bedroom_image_0114.jpg" NAME="graphics153" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Bedroom</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/LivingRoom_image_0049.jpg" NAME="graphics154" ALIGN=BOTTOM WIDTH=106 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Bedroom</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/LivingRoom_image_0055.jpg" NAME="graphics155" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Bedroom</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>Office</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.920</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Office_image_0129.jpg" NAME="graphics156" ALIGN=BOTTOM WIDTH=105 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Office_image_0030.jpg" NAME="graphics157" ALIGN=BOTTOM WIDTH=108 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Office_image_0015.jpg" NAME="graphics158" ALIGN=BOTTOM WIDTH=93 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Office_image_0157.jpg" NAME="graphics159" ALIGN=BOTTOM WIDTH=116 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/LivingRoom_image_0120.jpg" NAME="graphics160" ALIGN=BOTTOM WIDTH=111 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>LivingRoom</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Kitchen_image_0159.jpg" NAME="graphics161" ALIGN=BOTTOM WIDTH=60 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Kitchen</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Office_image_0127.jpg" NAME="graphics162" ALIGN=BOTTOM WIDTH=119 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Kitchen</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Office_image_0037.jpg" NAME="graphics163" ALIGN=BOTTOM WIDTH=108 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Kitchen</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>Industrial</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.630</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Industrial_image_0301.jpg" NAME="graphics164" ALIGN=BOTTOM WIDTH=54 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Industrial_image_0112.jpg" NAME="graphics165" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Industrial_image_0053.jpg" NAME="graphics166" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Industrial_image_0016.jpg" NAME="graphics167" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Store_image_0109.jpg" NAME="graphics168" ALIGN=BOTTOM WIDTH=101 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Store</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/TallBuilding_image_0064.jpg" NAME="graphics169" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>TallBuilding</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Industrial_image_0091.jpg" NAME="graphics170" ALIGN=BOTTOM WIDTH=57 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Mountain</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Industrial_image_0122.jpg" NAME="graphics171" ALIGN=BOTTOM WIDTH=51 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>TallBuilding</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>Suburb</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.980</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Suburb_image_0204.jpg" NAME="graphics172" ALIGN=BOTTOM WIDTH=113 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Suburb_image_0063.jpg" NAME="graphics173" ALIGN=BOTTOM WIDTH=113 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Suburb_image_0077.jpg" NAME="graphics174" ALIGN=BOTTOM WIDTH=113 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Suburb_image_0175.jpg" NAME="graphics175" ALIGN=BOTTOM WIDTH=113 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Street_image_0119.jpg" NAME="graphics176" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Street</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/TallBuilding_image_0105.jpg" NAME="graphics177" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>TallBuilding</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Suburb_image_0004.jpg" NAME="graphics178" ALIGN=BOTTOM WIDTH=113 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>LivingRoom</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Suburb_image_0103.jpg" NAME="graphics179" ALIGN=BOTTOM WIDTH=113 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>TallBuilding</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>InsideCity</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.730</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/InsideCity_image_0072.jpg" NAME="graphics180" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/InsideCity_image_0014.jpg" NAME="graphics181" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/InsideCity_image_0096.jpg" NAME="graphics182" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/InsideCity_image_0035.jpg" NAME="graphics183" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Store_image_0079.jpg" NAME="graphics184" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Store</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Store_image_0090.jpg" NAME="graphics185" ALIGN=BOTTOM WIDTH=112 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Store</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/InsideCity_image_0023.jpg" NAME="graphics186" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Industrial</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/InsideCity_image_0139.jpg" NAME="graphics187" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Suburb</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>TallBuilding</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.840</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/TallBuilding_image_0234.jpg" NAME="graphics188" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/TallBuilding_image_0184.jpg" NAME="graphics189" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/TallBuilding_image_0103.jpg" NAME="graphics190" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/TallBuilding_image_0077.jpg" NAME="graphics191" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Store_image_0015.jpg" NAME="graphics192" ALIGN=BOTTOM WIDTH=100 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Store</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/InsideCity_image_0129.jpg" NAME="graphics193" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>InsideCity</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/TallBuilding_image_0095.jpg" NAME="graphics194" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Suburb</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/TallBuilding_image_0017.jpg" NAME="graphics195" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>InsideCity</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>Street</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.840</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Street_image_0037.jpg" NAME="graphics196" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Street_image_0206.jpg" NAME="graphics197" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Street_image_0036.jpg" NAME="graphics198" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Street_image_0014.jpg" NAME="graphics199" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/InsideCity_image_0137.jpg" NAME="graphics200" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>InsideCity</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Office_image_0062.jpg" NAME="graphics201" ALIGN=BOTTOM WIDTH=110 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Office</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Street_image_0057.jpg" NAME="graphics202" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Highway</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Street_image_0074.jpg" NAME="graphics203" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Store</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>Highway</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.880</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Highway_image_0186.jpg" NAME="graphics204" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Highway_image_0028.jpg" NAME="graphics205" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Highway_image_0051.jpg" NAME="graphics206" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Highway_image_0006.jpg" NAME="graphics207" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/OpenCountry_image_0061.jpg" NAME="graphics208" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>OpenCountry</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/OpenCountry_image_0007.jpg" NAME="graphics209" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>OpenCountry</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Highway_image_0022.jpg" NAME="graphics210" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Coast</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Highway_image_0015.jpg" NAME="graphics211" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Street</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>OpenCountry</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.640</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/OpenCountry_image_0156.jpg" NAME="graphics212" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/OpenCountry_image_0124.jpg" NAME="graphics213" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/OpenCountry_image_0103.jpg" NAME="graphics214" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/OpenCountry_image_0080.jpg" NAME="graphics215" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Bedroom_image_0156.jpg" NAME="graphics216" ALIGN=BOTTOM WIDTH=99 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Bedroom</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Coast_image_0070.jpg" NAME="graphics217" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Coast</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/OpenCountry_image_0019.jpg" NAME="graphics218" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Coast</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/OpenCountry_image_0119.jpg" NAME="graphics219" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Coast</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>Coast</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.780</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Coast_image_0342.jpg" NAME="graphics220" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Coast_image_0159.jpg" NAME="graphics221" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Coast_image_0021.jpg" NAME="graphics222" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Coast_image_0095.jpg" NAME="graphics223" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/InsideCity_image_0015.jpg" NAME="graphics224" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>InsideCity</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/OpenCountry_image_0011.jpg" NAME="graphics225" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>OpenCountry</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Coast_image_0096.jpg" NAME="graphics226" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>OpenCountry</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Coast_image_0081.jpg" NAME="graphics227" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>OpenCountry</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>Mountain</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.840</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Mountain_image_0026.jpg" NAME="graphics228" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Mountain_image_0313.jpg" NAME="graphics229" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Mountain_image_0052.jpg" NAME="graphics230" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Mountain_image_0113.jpg" NAME="graphics231" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Highway_image_0004.jpg" NAME="graphics232" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Highway</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/OpenCountry_image_0115.jpg" NAME="graphics233" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>OpenCountry</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Mountain_image_0060.jpg" NAME="graphics234" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Coast</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Mountain_image_0030.jpg" NAME="graphics235" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Coast</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD STYLE="border: none; padding: 0in">
+			<P>Forest</P>
+		</TD>
+		<TD STYLE="border: none; padding: 0in">
+			<P>0.950</P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Forest_image_0113.jpg" NAME="graphics236" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#add8e6" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Forest_image_0327.jpg" NAME="graphics237" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Forest_image_0085.jpg" NAME="graphics238" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#90ee90" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Forest_image_0053.jpg" NAME="graphics239" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/OpenCountry_image_0041.jpg" NAME="graphics240" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>OpenCountry</FONT></P>
+		</TD>
+		<TD BGCOLOR="#f08080" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/OpenCountry_image_0079.jpg" NAME="graphics241" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>OpenCountry</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Forest_image_0117.jpg" NAME="graphics242" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>Mountain</FONT></P>
+		</TD>
+		<TD BGCOLOR="#ffbb55" STYLE="border: none; padding: 0in">
+			<P><IMG SRC="../code/1000spac00001_files/Forest_image_0036.jpg" NAME="graphics243" ALIGN=BOTTOM WIDTH=75 HEIGHT=75 BORDER=0><BR><FONT SIZE=2>TallBuilding</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TH STYLE="border: none; padding: 0in">
+			<P>Category name</P>
+		</TH>
+		<TH STYLE="border: none; padding: 0in">
+			<P>Accuracy</P>
+		</TH>
+		<TH COLSPAN=2 STYLE="border: none; padding: 0in">
+			<P>Sample training images</P>
+		</TH>
+		<TH COLSPAN=2 STYLE="border: none; padding: 0in">
+			<P>Sample true positives</P>
+		</TH>
+		<TH COLSPAN=2 STYLE="border: none; padding: 0in">
+			<P>False positives with true label</P>
+		</TH>
+		<TH COLSPAN=2 STYLE="border: none; padding: 0in">
+			<P>False negatives with wrong predicted label</P>
+		</TH>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT SIZE=5>Comparison:</FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT SIZE=3>Spatial pyramid matching
+consistently out-performed the bag of words implementation. Below is
+a chart comparing the two methods over a range of vocabulary sizes. </FONT>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT SIZE=3>Bag of Words vs Spatial
+Pyramid Performance</FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><IMG SRC="../code/untitled.jpg" NAME="graphics123" ALIGN=LEFT WIDTH=560 HEIGHT=420 BORDER=0><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+</BODY>
+</HTML>
