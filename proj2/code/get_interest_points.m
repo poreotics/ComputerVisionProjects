@@ -9,7 +9,6 @@
 
 
 
-
 %Local Feature Stencil Code
 % CS 143 Computater Vision, Brown U.
 % Written by James Hays
@@ -31,24 +30,7 @@
 function [x, y, confidence, scale, orientation] = get_interest_points(image, feature_width)
 
 % Implement the Harris corner detector (See Szeliski 4.1.1) to start with.
-% You can create add
-%   or(b) scale the image filters being used. Or you can ignore it.
-%   or(b) scale the image filters being used. Or you can ignore it.itional interest point detector functions (e.g. MSER)
-% for extra credit.
 
-% If you're finding spurious interest point detections near the boundaries,
-% it is safe to simply suppress the gradients / corners near the edges of
-% the image.
-
-% The lecture slides and textbook are a bit vague on how to do the
-% non-maximum suppression once you've thresholded the cornerness score.
-% You are free to experiment. Here are some helpful functions:
-%  BWLABEL and the newer BWCONNCOMP will find connected components in 
-% thresholded binary image. You could, for instance, take the maximum value
-% within each component.
-%  COLFILT can be used to run a max() operator on each sliding window. You
-% could use this to ensure that every interest point is at a local maximum
-% of cornerness.
 
 
 gradFilt=fspecial('sobel');
